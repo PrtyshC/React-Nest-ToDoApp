@@ -1,0 +1,142 @@
+/* Apply to the entire page */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+  font-family: 'Raleway', sans-serif;
+}
+
+/* Home page wrapper */
+.home-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Subtle background animation with slow gradient transition */
+.background-animation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(46,7,63,1) 0%, rgba(122,28,172,1) 25%, rgba(173,73,225,1) 50%, rgba(235,211,248,1) 75%);
+  background-size: 200% 200%; /* Start with larger background for smooth transition */
+  animation: smoothBackgroundAnimation 60s infinite ease-in-out;
+  z-index: 0; /* Ensure it's in the background */
+}
+
+/* Smooth background animation keyframe */
+@keyframes smoothBackgroundAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Particle effect */
+.particle {
+  position: absolute;
+  width: 12px; /* Slightly larger particles */
+  height: 12px;
+  background-color: rgba(235, 211, 248, 0.8);
+  border-radius: 50%;
+  animation: particleAnimation 2s infinite ease-in-out;
+}
+
+@keyframes particleAnimation {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.8);
+  }
+  50% {
+    opacity: 0.4;
+    transform: translateY(-100px) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(0.8);
+  }
+}
+
+/* Home container styles */
+.home-container {
+  position: relative;
+  text-align: center;
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.85); /* Dark background */
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  width: 100%;
+  max-width: 600px;
+  margin: 420px;
+  overflow: hidden; /* Prevent overflow from inner content */
+}
+
+/* Title styling */
+.home-container h1 {
+  font-size: 3rem;
+  color: #EBD3F8;
+  text-shadow: 4px 4px 12px #7A1CAC;
+  animation: fadeInUp 1.5s ease-out;
+}
+
+/* Subtitle styling */
+.home-container .subtitle {
+  font-size: 1.5rem;
+  color: #AD49E1;
+  text-shadow: 3px 3px 10px #2E073F;
+  margin-top: 15px;
+  animation: fadeInUp 2s ease-out;
+}
+
+/* Links styling as buttons */
+.home-container a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 12px 30px;
+  margin: 10px;
+  background-color: #7A1CAC;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect for buttons */
+.home-container a:hover {
+  background-color: #AD49E1;
+  transform: scale(1.05);
+}
+
+/* Animation keyframes for fade-in effect */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Adjusting the "please", "or", "to continue" text */
+.home-container p {
+  color: #EBD3F8; /* Match the title color */
+  font-size: 1.1rem;
+  text-shadow: none; /* Remove any text shadow for readability */
+}
+
+/* Centered form container */
+.home-container p a {
+  color: #EBD3F8; /* Ensure links match title color */
+  font-weight: 600;
+}
