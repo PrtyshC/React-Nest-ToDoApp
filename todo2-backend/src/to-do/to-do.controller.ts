@@ -1,3 +1,4 @@
+//todo controller
 import {
   Controller,
   Get,
@@ -12,7 +13,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ToDoService } from './to-do.service';
-import { JwtAuthGuard } from 'src/jwt/jwt-auth.guard';
+import { JwtAuthGuard } from '../jwt/jwt-auth.guard';
 
 @Controller('todos')
 @UseGuards(JwtAuthGuard) // Apply JWT guard to all routes
@@ -81,9 +82,8 @@ export class ToDoController {
       if (!userId) {
         throw new HttpException('Invalid user', HttpStatus.UNAUTHORIZED);
       }
-
       await this.todoService.deleteToDo(userId, id);
-      return { success: true, message: 'Todo deleted successfully' };
+      return { success: true, message: 'Todo deleted successfully'};
     } catch (error) {
       throw new HttpException(error.message || 'Unable to delete todo', HttpStatus.INTERNAL_SERVER_ERROR);
     }

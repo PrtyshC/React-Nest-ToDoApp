@@ -1,6 +1,6 @@
 import { UserService } from '../user/user.service';
-import { CustomJwtService } from 'src/jwt/custom-jwt.service';
-import { JwtPayload } from 'src/jwt/jwt.payload.interface';
+import { CustomJwtService } from '../jwt/custom-jwt.service';
+import { JwtPayload } from '../jwt/jwt.payload.interface';
 export declare class AuthService {
     private readonly userService;
     private jwtService;

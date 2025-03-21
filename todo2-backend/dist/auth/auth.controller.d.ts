@@ -1,5 +1,5 @@
 import { AuthService } from './auth.service';
-import { CustomJwtService } from 'src/jwt/custom-jwt.service';
+import { CustomJwtService } from '../jwt/custom-jwt.service';
 import { Response } from 'express';
 export declare class AuthController {
     private readonly authService;

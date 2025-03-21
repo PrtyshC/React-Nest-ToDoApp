@@ -4,8 +4,8 @@ import { UserModule } from '../user/user.module';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtAuthGuard } from '../jwt/jwt-auth.guard';
-import { CustomJwtService } from 'src/jwt/custom-jwt.service';
-import { JwtAuthModule } from 'src/jwt/jwt.module';
+import { CustomJwtService } from '../jwt/custom-jwt.service';
+import { JwtAuthModule } from '../jwt/jwt.module';
 import { ConfigModule } from '@nestjs/config';  
 
 @Module({

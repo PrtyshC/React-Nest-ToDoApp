@@ -16,6 +16,7 @@ exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const jwt_auth_guard_1 = require("../jwt/jwt-auth.guard");
+const common_2 = require("@nestjs/common");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -24,10 +25,18 @@ let UserController = class UserController {
         return this.userService.createUser(body.firstName, body.lastName, body.email, body.password);
     }
     async findUserByEmail(body) {
-        return this.userService.findUserByEmail(body.email);
+        const user = await this.userService.findUserByEmail(body.email);
+        if (!user) {
+            throw new common_2.NotFoundException('User not found');
+        }
+        return user;
     }
     async getUser(req) {
-        return this.userService.findById(req.user.sub);
+        const user = await this.userService.findById(req.user.sub);
+        if (!user) {
+            throw new common_2.NotFoundException('User not found');
+        }
+        return user;
     }
 };
 exports.UserController = UserController;
@@ -40,6 +49,7 @@ __decorate([
 ], UserController.prototype, "register", null);
 __decorate([
     (0, common_1.Post)('find'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -48,6 +58,7 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)(),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

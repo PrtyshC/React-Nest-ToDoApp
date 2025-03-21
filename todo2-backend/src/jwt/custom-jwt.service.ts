@@ -12,14 +12,14 @@ export class CustomJwtService {
 
   // Method to generate JWT token
   generateToken(payload: any): string {
-    const secret = this.configService.get<string>('superdupersecret');  // Replace with your actual secret key
+    const secret = this.configService.get<string>('superdupersecret');  
     const expiresIn = '1h';  
     return this.jwtService.sign(payload, { secret, expiresIn });
   }
 
   // Method to verify JWT token
   verify(token: string): any {
-    const secret = this.configService.get<string>('superdupersecret');  // Replace with your actual secret key
+    const secret = this.configService.get<string>('superdupersecret');  
     try {
       return this.jwtService.verify(token, { secret });
     } catch (error) {

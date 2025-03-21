@@ -8,7 +8,7 @@ import { User } from '../user/user.entity';
 import { AuthModule } from '../auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from 'src/user/user.module';
-import { JwtAuthModule } from 'src/jwt/jwt.module';
+import { JwtAuthModule } from '../jwt/jwt.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ToDo, User]), AuthModule,JwtAuthModule],

@@ -23,18 +23,30 @@ let UserService = class UserService {
         this.userRepository = userRepository;
     }
     async createUser(firstName, lastName, email, password) {
+        const existingUser = await this.findByEmail(email);
+        if (existingUser) {
+            throw new common_1.ConflictException('User already exists');
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = this.userRepository.create({ firstName, lastName, email, password: hashedPassword });
         return this.userRepository.save(newUser);
     }
-    async findUserByEmail(email) {
-        return this.userRepository.findOne({ where: { email } });
-    }
     async findByEmail(email) {
         return this.userRepository.findOne({ where: { email } });
     }
+    async findUserByEmail(email) {
+        const user = await this.userRepository.findOne({ where: { email } });
+        if (!user) {
+            throw new common_1.NotFoundException('User not found');
+        }
+        return user;
+    }
     async findById(id) {
-        return this.userRepository.findOne({ where: { id } });
+        const user = await this.userRepository.findOne({ where: { id } });
+        if (!user) {
+            throw new common_1.NotFoundException('User not found');
+        }
+        return user;
     }
 };
 exports.UserService = UserService;

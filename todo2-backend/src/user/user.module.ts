@@ -4,10 +4,10 @@ import { UserController } from './user.controller';
 import { User } from './user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';  
-import { CustomJwtService } from 'src/jwt/custom-jwt.service';
-import { JwtAuthModule } from 'src/jwt/jwt.module';
+import { CustomJwtService } from '../jwt/custom-jwt.service';
+import { JwtAuthModule } from '../jwt/jwt.module';
 import { ConfigService } from '@nestjs/config';
-import { ToDoModule } from 'src/to-do/to-do.module';
+import { ToDoModule } from '../to-do/to-do.module';
 
 @Module({
   imports: [

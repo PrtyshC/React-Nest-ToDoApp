@@ -4,10 +4,14 @@ import LoginPage from './components/Login';
 import RegisterPage from './components/Register';
 import ToDoPage from './components/ToDoPage';
 import HomePage from './pages/HomePage';
+import Clarity from '@microsoft/clarity';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const projectID = "qrj3a2q014";
+
+  Clarity.init(projectID)
 
   // Check if the token exists in localStorage when the app loads
   useEffect(() => {

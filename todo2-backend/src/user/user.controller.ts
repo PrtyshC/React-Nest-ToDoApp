@@ -1,7 +1,9 @@
-import { Controller, Post, Get, Body, UseGuards, Request } from '@nestjs/common';
+//user controller
+import { Controller, Post, Get, Body, UseGuards, Request, HttpCode, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
-import { JwtAuthGuard } from '../jwt/jwt-auth.guard'; 
+import { JwtAuthGuard } from '../jwt/jwt-auth.guard';
+import { NotFoundException } from '@nestjs/common';
 
 @Controller('user')
 export class UserController {
@@ -12,17 +14,24 @@ export class UserController {
     return this.userService.createUser(body.firstName, body.lastName, body.email, body.password);
   }
 
-  // Endpoint to find user by email
   @Post('find')
-  async findUserByEmail(@Body() body: { email: string }): Promise<User> {
-    return this.userService.findUserByEmail(body.email);
+@HttpCode(HttpStatus.OK) 
+async findUserByEmail(@Body() body: { email: string }): Promise<User> {
+  const user = await this.userService.findUserByEmail(body.email);
+  if (!user) {
+    throw new NotFoundException('User not found');
   }
+  return user;
+}
 
-  // GET endpoint to fetch the current user by their ID from the JWT token
-  @UseGuards(JwtAuthGuard) // Protect the route with JWT authentication
-  @Get()
-  async getUser(@Request() req): Promise<User> {
-    // The user is attached to the request object by the JwtAuthGuard
-    return this.userService.findById(req.user.sub); // Fetch user by their ID
+@UseGuards(JwtAuthGuard)
+@Get()
+@HttpCode(HttpStatus.OK) 
+async getUser(@Request() req): Promise<User> {
+  const user = await this.userService.findById(req.user.sub);
+  if (!user) {
+    throw new NotFoundException('User not found');
   }
+  return user;
+}
 }

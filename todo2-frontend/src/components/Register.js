@@ -67,7 +67,7 @@ const Register = () => {
                 required: 'Email is required',
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@nw18\.com$/,
-                  message: 'Invalid email address. Please use an @nw18.com email.',
+                  message: 'Invalid email address.',
                 },
               })}
             />

@@ -1,15 +1,15 @@
-import { Injectable } from '@nestjs/common';
+//todo service
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ToDo } from './todo.entity';
-import { User } from '../user/user.entity'; // Assuming you have a User entity
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class ToDoService {
   constructor(
     @InjectRepository(ToDo)
     private todoRepository: Repository<ToDo>,
-
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
@@ -45,7 +45,7 @@ export class ToDoService {
     const todo = await this.todoRepository.findOne({ where: { id: todoId, userId } });
 
     if (!todo) {
-      throw new Error('ToDo task not found');
+      throw new NotFoundException('Todo not found');
     }
 
     if (title) todo.title = title;
@@ -60,7 +60,7 @@ export class ToDoService {
     const todo = await this.todoRepository.findOne({ where: { id: todoId, userId } });
 
     if (!todo) {
-      throw new Error('ToDo task not found');
+      throw new NotFoundException('Todo not found');
     }
 
     await this.todoRepository.remove(todo);

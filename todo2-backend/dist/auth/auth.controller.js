@@ -43,7 +43,7 @@ let AuthController = class AuthController {
         if (!access_token) {
             throw new common_2.UnauthorizedException('Invalid credentials');
         }
-        return response.status(200).json({
+        return response.status(common_1.HttpStatus.OK).json({
             message: 'Login successful',
             access_token,
         });
@@ -52,6 +52,7 @@ let AuthController = class AuthController {
 exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)('register'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)('firstName')),
     __param(1, (0, common_1.Body)('lastName')),
     __param(2, (0, common_1.Body)('email')),
@@ -62,6 +63,7 @@ __decorate([
 ], AuthController.prototype, "register", null);
 __decorate([
     (0, common_1.Post)('verify-token'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

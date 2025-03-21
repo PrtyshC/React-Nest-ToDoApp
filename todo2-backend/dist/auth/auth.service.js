@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
-const common_2 = require("@nestjs/common");
 const bcrypt = require("bcrypt");
 const custom_jwt_service_1 = require("../jwt/custom-jwt.service");
 let AuthService = class AuthService {
@@ -23,23 +22,30 @@ let AuthService = class AuthService {
     async register(firstName, lastName, email, password) {
         const existingUser = await this.userService.findByEmail(email);
         if (existingUser) {
-            throw new Error('User already exists');
+            throw new common_1.ConflictException('User already exists');
         }
-        return await this.userService.createUser(firstName, lastName, email, password);
+        try {
+            return await this.userService.createUser(firstName, lastName, email, password);
+        }
+        catch (error) {
+            if (error.code === 'SQLITE_CONSTRAINT') {
+                throw new common_1.ConflictException('User already exists');
+            }
+            throw error;
+        }
     }
     async login(email, password) {
         const user = await this.userService.findByEmail(email);
         if (!user) {
-            throw new common_2.UnauthorizedException('Invalid credentials');
+            throw new common_1.UnauthorizedException('Invalid credentials');
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         console.log('Password comparison result:', isPasswordValid);
         if (!isPasswordValid) {
-            throw new common_2.UnauthorizedException('Invalid credentials');
+            throw new common_1.UnauthorizedException('Invalid credentials');
         }
         const payload = { email: user.email, sub: user.id };
         const access_token = this.jwtService.generateToken(payload);
-        const { password: _, ...result } = user;
         return { access_token };
     }
     verifyToken(token) {
@@ -48,7 +54,7 @@ let AuthService = class AuthService {
             return decoded;
         }
         catch (error) {
-            throw new Error('Invalid token');
+            throw new common_1.UnauthorizedException('Invalid token');
         }
     }
 };

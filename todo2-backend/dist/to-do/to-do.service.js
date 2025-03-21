@@ -37,7 +37,7 @@ let ToDoService = class ToDoService {
     async updateToDo(userId, todoId, title, description, completed) {
         const todo = await this.todoRepository.findOne({ where: { id: todoId, userId } });
         if (!todo) {
-            throw new Error('ToDo task not found');
+            throw new common_1.NotFoundException('Todo not found');
         }
         if (title)
             todo.title = title;
@@ -50,7 +50,7 @@ let ToDoService = class ToDoService {
     async deleteToDo(userId, todoId) {
         const todo = await this.todoRepository.findOne({ where: { id: todoId, userId } });
         if (!todo) {
-            throw new Error('ToDo task not found');
+            throw new common_1.NotFoundException('Todo not found');
         }
         await this.todoRepository.remove(todo);
     }

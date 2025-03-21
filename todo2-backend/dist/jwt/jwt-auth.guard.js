@@ -28,6 +28,7 @@ let JwtAuthGuard = class JwtAuthGuard {
             throw new common_2.UnauthorizedException('Invalid token format');
         }
         console.log('Token received:', token);
+        console.log('Decoded Token: ', this.jwtService.decode(token));
         try {
             const user = await this.jwtService.verify(token);
             request.user = user;
